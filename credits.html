@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Credits System - SkillSwap</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; padding: 0 20px; background: #f4f7fa; }
+    nav a { margin-right: 15px; color: #1a73e8; text-decoration: none; font-weight: 600; }
+    nav a:hover { text-decoration: underline; }
+    h1, h2 { color: #1a73e8; }
+    #credits-container {
+      display: flex; align-items: center; justify-content: space-between; background: white; padding: 15px 20px;
+      border-radius: 8px; box-shadow: 0 3px 8px rgb(0 0 0 / 0.1); margin-bottom: 20px;
+    }
+    .balance { font-size: 1.3em; font-weight: 700; color: #0b8043; }
+    button {
+      background-color: #0b8043; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;
+      font-weight: 700;
+    }
+    button:hover { background-color: #09622b; }
+    #transaction-history {
+      background: #fafafa; border: 1px solid #ddd; border-radius: 5px; padding: 10px; max-height: 200px; overflow-y: auto;
+    }
+    #transaction-history p { margin-bottom: 8px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Home</a>
+
+  
+  <h1>Barter Credit System</h1>
+
+  <div id="credits-container">
+    <div><span class="balance">Credits: <span id="creditBalance">50</span></span></div>
+    <button id="earnCreditBtn">Earn Credit (Simulate)</button>
+  </div>
+
+  <div id="transaction-history">
+    <p><strong>Transaction History:</strong></p>
+    <p id="noTransactionsMsg">No transactions yet.</p>
+  </div>
+
+<script>
+  let creditBalance = parseInt(localStorage.getItem('creditBalance')) || 50;
+  let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+  const creditBalanceEl = document.getElementById('creditBalance');
+  const transactionHistoryEl = document.getElementById('transaction-history');
+  const noTransactionsMsg = document.getElementById('noTransactionsMsg');
+  const earnCreditBtn = document.getElementById('earnCreditBtn');
+
+  function updateBalanceDisplay() {
+    creditBalanceEl.textContent = creditBalance;
+  }
+
+  function updateTransactionHistory() {
+    if (transactions.length === 0) {
+      noTransactionsMsg.style.display = 'block';
+      return;
+    }
+    noTransactionsMsg.style.display = 'none';
+    // Remove old transaction <p> except the heading
+    const allP = transactionHistoryEl.querySelectorAll('p');
+    allP.forEach((p, i) => { if(i>0) p.remove(); });
+
+    transactions.slice().reverse().forEach(t => {
+      const p = document.createElement('p');
+      p.textContent = `${t.date} - ${t.desc} (${t.amount > 0 ? '+' : ''}${t.amount} credits)`;
+      transactionHistoryEl.appendChild(p);
+    });
+  }
+
+  earnCreditBtn.addEventListener('click', () => {
+    const now = new Date();
+    creditBalance += 10;
+    transactions.push({ date: now.toLocaleString(), desc: 'Earned Credit', amount: 10 });
+    localStorage.setItem('creditBalance', creditBalance);
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+    updateBalanceDisplay();
+    updateTransactionHistory();
+  });
+
+  updateBalanceDisplay();
+  updateTransactionHistory();
+</script>
+
+</body>
+</html>

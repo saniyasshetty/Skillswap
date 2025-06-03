@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile Management - SkillSwap</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 700px; margin: 30px auto; padding: 0 20px; background: #f4f7fa; }
+    nav a { margin-right: 15px; color: #1a73e8; text-decoration: none; font-weight: 600; }
+    nav a:hover { text-decoration: underline; }
+    h1, h2 { color: #1a73e8; }
+    form { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 3px 8px rgb(0 0 0 / 0.1); }
+    label { display: block; font-weight: 600; margin-bottom: 6px; margin-top: 12px; }
+    input[type=text], textarea, select {
+      width: 100%; padding: 8px; border-radius: 5px; border: 1px solid #ccc; resize: vertical;
+    }
+    textarea { height: 80px; }
+    button {
+      margin-top: 20px;
+      background-color: #1a73e8; color: white; border: none; padding: 10px 15px; font-weight: 700; border-radius: 5px; cursor: pointer;
+    }
+    button:hover { background-color: #155ab6; }
+    #message { margin-top: 12px; font-weight: 600; color: #0b8043; }
+  </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Home</a>
+
+  
+  <h1>Profile Management</h1>
+
+  <form id="profileForm">
+    <label for="skillsOffered">Skills Offered (comma separated)</label>
+    <input type="text" id="skillsOffered" placeholder="e.g. Python, Graphic Design" />
+
+    <label for="skillsWanted">Skills Wanted (comma separated)</label>
+    <input type="text" id="skillsWanted" placeholder="e.g. Video Editing, Data Science" />
+
+    <label for="availability">Availability</label>
+    <select id="availability">
+      <option value="morning">Morning</option>
+      <option value="afternoon">Afternoon</option>
+      <option value="evening">Evening</option>
+      <option value="weekends">Weekends</option>
+    </select>
+
+    <label for="portfolio">Portfolio / Verification</label>
+    <textarea id="portfolio" placeholder="Link your portfolio or certifications"></textarea>
+
+    <button type="submit">Save Profile</button>
+  </form>
+
+  <div id="message"></div>
+
+<script>
+  const profileForm = document.getElementById('profileForm');
+  const messageEl = document.getElementById('message');
+
+  // Load profile from localStorage
+  function loadProfile() {
+    const profile = JSON.parse(localStorage.getItem('userProfile'));
+    if (profile) {
+      document.getElementById('skillsOffered').value = profile.skillsOffered || '';
+      document.getElementById('skillsWanted').value = profile.skillsWanted || '';
+      document.getElementById('availability').value = profile.availability || 'morning';
+      document.getElementById('portfolio').value = profile.portfolio || '';
+    }
+  }
+
+  profileForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const profile = {
+      skillsOffered: document.getElementById('skillsOffered').value.trim(),
+      skillsWanted: document.getElementById('skillsWanted').value.trim(),
+      availability: document.getElementById('availability').value,
+      portfolio: document.getElementById('portfolio').value.trim(),
+    };
+
+    localStorage.setItem('userProfile', JSON.stringify(profile));
+    messageEl.textContent = 'Profile saved successfully!';
+    setTimeout(() => { messageEl.textContent = ''; }, 3000);
+  });
+
+  loadProfile();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SkillSwap Quiz Zone</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet" />
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .quiz-container {
+    background: rgba(0,0,0,0.3);
+    max-width: 600px;
+    width: 100%;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .question {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  .options {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 25px;
+  }
+  .options li {
+    background: #5a4a8a;
+    margin: 8px 0;
+    padding: 12px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  .options li:hover {
+    background: #7a6ab7;
+  }
+  .options li.selected {
+    background: #ffcb05;
+    color: #000;
+    font-weight: 700;
+  }
+  button {
+    display: block;
+    margin: 0 auto;
+    background: #ffcb05;
+    color: #000;
+    border: none;
+    padding: 12px 25px;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 0 15px #ffcb05aa;
+    transition: background 0.3s;
+  }
+  button:hover:not(:disabled) {
+    background: #e6b805;
+  }
+  button:disabled {
+    background: #555;
+    cursor: not-allowed;
+  }
+  .result {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  .back-button {
+    display: block;
+    margin: 15px auto 30px;
+    background: transparent;
+    border: 2px solid #ffcb05;
+    color: #ffcb05;
+    padding: 8px 20px;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    width: fit-content;
+  }
+  .back-button:hover {
+    background: #ffcb05;
+    color: #000;
+  }
+</style>
+</head>
+<body>
+  <div class="quiz-container">
+    <a href="index.html" class="back-button">← Back to Home</a>
+    <h1>SkillSwap Quiz Zone</h1>
+    <div id="quiz">
+      <!-- Quiz content injected by JS -->
+    </div>
+    <button id="nextBtn" disabled>Next</button>
+    <div id="result" class="result"></div>
+  </div>
+
+<script>
+  const quizData = [
+    {
+      question: "Which language is primarily used for web development?",
+      options: ["Python", "JavaScript", "C++", "Java"],
+      answer: 1
+    },
+    {
+      question: "What does CSS stand for?",
+      options: [
+        "Creative Style Sheets",
+        "Cascading Style Sheets",
+        "Computer Style Sheets",
+        "Colorful Style Sheets"
+      ],
+      answer: 1
+    },
+    {
+      question: "What does P2P stand for in networking?",
+      options: [
+        "Peer to Peer",
+        "Point to Point",
+        "Private to Public",
+        "Packet to Packet"
+      ],
+      answer: 0
+    },
+    {
+      question: "Which of these is NOT a programming language?",
+      options: ["Ruby", "Python", "HTML", "Swift"],
+      answer: 2
+    },
+    {
+      question: "What is the main purpose of Git?",
+      options: [
+        "Version control",
+        "Design graphics",
+        "Run programs",
+        "Host websites"
+      ],
+      answer: 0
+    }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  const quizDiv = document.getElementById('quiz');
+  const nextBtn = document.getElementById('nextBtn');
+  const resultDiv = document.getElementById('result');
+
+  function loadQuestion() {
+    nextBtn.disabled = true;
+    resultDiv.textContent = '';
+    quizDiv.innerHTML = '';
+    const q = quizData[currentQuestion];
+
+    const questionEl = document.createElement('div');
+    questionEl.className = 'question';
+    questionEl.textContent = `Q${currentQuestion+1}. ${q.question}`;
+    quizDiv.appendChild(questionEl);
+
+    const optionsList = document.createElement('ul');
+    optionsList.className = 'options';
+
+    q.options.forEach((opt, i) => {
+      const li = document.createElement('li');
+      li.textContent = opt;
+      li.addEventListener('click', () => selectOption(i, li));
+      optionsList.appendChild(li);
+    });
+
+    quizDiv.appendChild(optionsList);
+  }
+
+  let selectedOption = null;
+
+  function selectOption(index, element) {
+    const options = document.querySelectorAll('.options li');
+    options.forEach(opt => opt.classList.remove('selected'));
+    element.classList.add('selected');
+    selectedOption = index;
+    nextBtn.disabled = false;
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (selectedOption === quizData[currentQuestion].answer) {
+      score++;
+    }
+    currentQuestion++;
+    selectedOption = null;
+    if (currentQuestion < quizData.length) {
+      loadQuestion();
+    } else {
+      showResult();
+    }
+  });
+
+  function showResult() {
+    quizDiv.innerHTML = '';
+    nextBtn.style.display = 'none';
+    resultDiv.textContent = `Quiz Complete! Your score: ${score} / ${quizData.length}`;
+
+    // Optional: motivational message
+    if (score === quizData.length) {
+      resultDiv.textContent += " 🎉 Perfect Score! You're a SkillSwap star!";
+    } else if (score >= quizData.length / 2) {
+      resultDiv.textContent += " 👍 Good job! Keep learning and growing.";
+    } else {
+      resultDiv.textContent += " 📚 Keep practicing, and you'll improve!";
+    }
+  }
+
+  // Initialize quiz
+  loadQuestion();
+</script>
+</body>
+</html>

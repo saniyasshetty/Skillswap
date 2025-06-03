@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkillSwap - Empower Your Skills</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to right, #f4f2f7, #e5ecfb);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    nav .logo {
+      font-size: 1.8rem;
+      color: #1a237e;
+      font-weight: bold;
+    }
+
+    nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    nav .nav-links a {
+      text-decoration: none;
+      color: #1a237e;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    nav .nav-links a:hover {
+      color: #ff4081;
+    }
+
+    header {
+      padding: 100px 20px 60px;
+      text-align: center;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    }
+
+    header h2 {
+      font-size: 3rem;
+      color: #0d47a1;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    header p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+      color: #555;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .cta {
+      padding: 15px 35px;
+      background: #1a237e;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      box-shadow: 0 10px 20px rgba(26, 35, 126, 0.2);
+      transition: background 0.3s ease;
+      font-size: 1.1rem;
+      display: inline-block;
+    }
+
+    .cta:hover {
+      background: #3949ab;
+    }
+
+    main {
+      flex-grow: 1;
+      max-width: 1000px;
+      margin: 40px auto 80px;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .step-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      width: 280px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .step-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+
+    .step-card h3 {
+      color: #1a237e;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .step-card p {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    .testimonials {
+      margin-bottom: 60px;
+    }
+
+    .testimonials h3 {
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #0d47a1;
+    }
+
+    .testimonial-cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .testimonial {
+      background: white;
+      padding: 25px;
+      max-width: 320px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      font-style: italic;
+      color: #444;
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 15px;
+      color: #1a237e;
+      font-style: normal;
+    }
+
+    .join-section {
+      background: #1a237e;
+      color: white;
+      padding: 50px 20px;
+      border-radius: 15px;
+      max-width: 600px;
+      margin: 0 auto 60px;
+      box-shadow: 0 10px 30px rgba(26, 35, 126, 0.3);
+    }
+
+    .join-section h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .join-section p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      line-height: 1.4;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #555;
+      background-color: #f5f5f5;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      header h2 {
+        font-size: 2.2rem;
+      }
+      .steps {
+        flex-direction: column;
+        gap: 25px;
+      }
+      .step-card {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+      .testimonial-cards {
+        flex-direction: column;
+      }
+      .testimonial {
+        max-width: 100%;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">SkillSwap</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="home.html"><span>🏠</span>Home</a>
+      <a href="learn.html"><span>📚</span>Learn</a>
+      <a href="goals.html"><span>🎯</span>Goals</a>
+      <a href="#"><span>💬</span>Chat</a>
+      <a href="#"><span>👤</span>Profile</a>
+    </div>
+  </nav>
+
+  <header>
+    <h2>Empower Your Learning, Share Your Skills</h2>
+    <p>Connect with peers. Learn and teach. Earn credits. Build your future through collaboration on SkillSwap — the platform for skill exchange and growth.</p>
+    <a href="home.html" class="cta">Explore Features</a>
+  </header>
+
+  <main>
+    <section class="steps">
+      <div class="step-card" onclick="showStepInfo(1)">
+        <h3>1. Join & Create Profile</h3>
+        <p>Sign up, showcase your skills, and set your availability to teach or learn.</p>
+      </div>
+      <div class="step-card" onclick="showStepInfo(2)">
+        <h3>2. Find Matches</h3>
+        <p>Discover learners and mentors with smart matching tailored to your goals.</p>
+      </div>
+      <div class="step-card" onclick="showStepInfo(3)">
+        <h3>3. Learn & Earn Credits</h3>
+        <p>Schedule sessions, exchange skills, and earn credits to keep growing.</p>
+      </div>
+    </section>
+
+    <section class="testimonials">
+      <h3>What Our Users Say</h3>
+      <div class="testimonial-cards">
+        <blockquote class="testimonial">
+          "SkillSwap made learning fun and flexible. I connected with amazing mentors and built real skills!"<br />
+          <strong>- Maya R.</strong>
+        </blockquote>
+        <blockquote class="testimonial">
+          "The credit economy encourages me to teach while learning. A fair and motivating system!"<br />
+          <strong>- Liam K.</strong>
+        </blockquote>
+        <blockquote class="testimonial">
+          "Scheduling sessions and video calls is seamless. It’s like having a personal learning coach."<br />
+          <strong>- Aisha S.</strong>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="join-section">
+      <h2>Ready to start your skill journey?</h2>
+      <p>Join thousands of learners and teachers today. Share what you know, learn what you love.</p>
+      <a href="home.html" class="cta">Get Started</a>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 SkillSwap | Built with purpose by passionate learners ✨
+  </footer>
+
+  <script>
+    function showStepInfo(step) {
+      const messages = {
+        1: "Create your profile to start learning or teaching. Customize your availability and skill set.",
+        2: "SkillSwap helps you find perfect mentors or learners based on your goals and interests.",
+        3: "As you teach or learn, you'll earn credits. These help you unlock more sessions and tools!"
+      };
+      alert(messages[step]);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Learning Goals | SkillSwap</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(to right, #edf2fb, #e2eafc);
+      color: #333;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      color: #1a237e;
+      font-weight: bold;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #1a237e;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #ff4081;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: linear-gradient(135deg, #dbeafe, #e0f2fe);
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .goals-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .goal-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .goal-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .goal-card h3 {
+      font-size: 1.4rem;
+      color: #1a237e;
+      margin-bottom: 10px;
+    }
+
+    .goal-card p {
+      color: #444;
+      line-height: 1.4;
+      font-size: 0.95rem;
+    }
+
+    .add-goal {
+      margin: 40px auto 0;
+      text-align: center;
+    }
+
+    .add-goal button {
+      background: #1a237e;
+      color: white;
+      font-weight: 600;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .add-goal button:hover {
+      background: #3949ab;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #e8eaf6;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      margin-bottom: 15px;
+      color: #1a237e;
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .modal-content button {
+      background: #1a237e;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .close-btn {
+      float: right;
+      font-size: 1.2rem;
+      cursor: pointer;
+      color: #999;
+    }
+
+    .close-btn:hover {
+      color: #333;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">SkillSwap</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="goals.html">Goals</a>
+      <a href="#">Chat</a>
+      <a href="#">Profile</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Your Learning Goals</h1>
+    <p>Track your progress, stay focused, and grow your skills with clear milestones.</p>
+  </header>
+
+  <main>
+    <div class="goals-container" id="goalsContainer">
+      <div class="goal-card">
+        <h3>Master Python Basics</h3>
+        <p>Finish the Python crash course and build 2 beginner projects.</p>
+      </div>
+      <div class="goal-card">
+        <h3>Improve Public Speaking</h3>
+        <p>Join 3 speaking sessions with mentors and record practice pitches.</p>
+      </div>
+      <div class="goal-card">
+        <h3>Teach Web Design</h3>
+        <p>Host 2 workshops and share your Figma-to-HTML process.</p>
+      </div>
+    </div>
+
+    <div class="add-goal">
+      <button onclick="openModal()">+ Add New Goal</button>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 SkillSwap | Progress through shared learning 🚀
+  </footer>
+
+  <!-- Modal for Adding Goal -->
+  <div class="modal" id="goalModal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>New Goal</h2>
+      <input type="text" id="goalTitle" placeholder="Goal Title" />
+      <textarea id="goalDescription" placeholder="Describe your goal..."></textarea>
+      <button onclick="addGoal()">Add Goal</button>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('goalModal');
+    const goalsContainer = document.getElementById('goalsContainer');
+
+    function openModal() {
+      modal.style.display = 'flex';
+    }
+
+    function closeModal() {
+      modal.style.display = 'none';
+    }
+
+    function addGoal() {
+      const title = document.getElementById('goalTitle').value.trim();
+      const description = document.getElementById('goalDescription').value.trim();
+
+      if (title && description) {
+        const card = document.createElement('div');
+        card.className = 'goal-card';
+        card.innerHTML = `<h3>${title}</h3><p>${description}</p>`;
+        goalsContainer.appendChild(card);
+
+        document.getElementById('goalTitle').value = '';
+        document.getElementById('goalDescription').value = '';
+        closeModal();
+      } else {
+        alert('Please fill out both fields.');
+      }
+    }
+
+    // Close modal on background click
+    window.onclick = function(event) {
+      if (event.target === modal) closeModal();
+    };
+  </script>
+</body>
+</html>

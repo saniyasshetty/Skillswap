@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ratings & Reviews - SkillSwap</title>
+  <style>
+    body { font-family: Arial; max-width: 700px; margin: 30px auto; background: #f4f7fa; padding: 0 20px; }
+    nav a { margin-right: 15px; color: #1a73e8; text-decoration: none; font-weight: 600; }
+    h1 { color: #1a73e8; }
+    .review { background: white; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+    textarea, select, button { width: 100%; margin-top: 10px; padding: 8px; border-radius: 5px; border: 1px solid #ccc; }
+    button { background: #1a73e8; color: white; font-weight: bold; border: none; cursor: pointer; }
+    button:hover { background: #155ab6; }
+  </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Home</a>
+
+ 
+  <h1>Ratings & Reviews</h1>
+
+  <select id="rating">
+    <option value="5">⭐️⭐️⭐️⭐️⭐️ Excellent</option>
+    <option value="4">⭐️⭐️⭐️⭐️ Good</option>
+    <option value="3">⭐️⭐️⭐️ Average</option>
+    <option value="2">⭐️⭐️ Poor</option>
+    <option value="1">⭐️ Bad</option>
+  </select>
+
+  <textarea id="reviewText" placeholder="Write your review..."></textarea>
+  <button onclick="submitReview()">Submit Review</button>
+
+  <div id="reviewsContainer"></div>
+
+<script>
+  let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const container = document.getElementById("reviewsContainer");
+
+  function submitReview() {
+    const rating = document.getElementById("rating").value;
+    const review = document.getElementById("reviewText").value.trim();
+
+    if (review) {
+      reviews.push({ rating, review, date: new Date().toLocaleString() });
+      localStorage.setItem("reviews", JSON.stringify(reviews));
+      document.getElementById("reviewText").value = "";
+      renderReviews();
+    }
+  }
+
+  function renderReviews() {
+    container.innerHTML = "";
+    reviews.slice().reverse().forEach(r => {
+      const div = document.createElement("div");
+      div.className = "review";
+      div.innerHTML = `<strong>${r.rating}⭐️</strong><p>${r.review}</p><small>${r.date}</small>`;
+      container.appendChild(div);
+    });
+  }
+
+  renderReviews();
+</script>
+
+</body>
+</html>

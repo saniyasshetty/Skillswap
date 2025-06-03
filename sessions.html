@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Learning Sessions - SkillSwap</title>
+  <style>
+    body { font-family: Arial; max-width: 700px; margin: 30px auto; background: #f4f7fa; padding: 0 20px; }
+    nav a { margin-right: 15px; color: #1a73e8; text-decoration: none; font-weight: 600; }
+    h1 { color: #1a73e8; }
+    ul { list-style: none; padding: 0; }
+    li { background: white; padding: 10px 15px; margin-bottom: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    input, button { padding: 8px; border-radius: 5px; border: 1px solid #ccc; margin-top: 10px; }
+    button { background: #1a73e8; color: white; font-weight: bold; border: none; cursor: pointer; }
+    button:hover { background: #155ab6; }
+    .back-home:hover {
+      background-color: #3949ab;
+    }
+  </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Home</a>
+
+  
+
+  <h1>Learning Sessions</h1>
+
+  <input type="text" id="sessionInput" placeholder="Enter session topic..." />
+  <button onclick="addSession()">Add Session</button>
+
+  <ul id="sessionList"></ul>
+
+<script>
+  const sessionList = document.getElementById("sessionList");
+  const sessionInput = document.getElementById("sessionInput");
+  let sessions = JSON.parse(localStorage.getItem("learningSessions")) || [];
+
+  function addSession() {
+    const topic = sessionInput.value.trim();
+    if (topic) {
+      sessions.push({ topic, date: new Date().toLocaleString() });
+      localStorage.setItem("learningSessions", JSON.stringify(sessions));
+      sessionInput.value = "";
+      renderSessions();
+    }
+  }
+
+  function renderSessions() {
+    sessionList.innerHTML = "";
+    sessions.forEach((s, i) => {
+      const li = document.createElement("li");
+      li.textContent = `${s.topic} - ${s.date}`;
+      sessionList.appendChild(li);
+    });
+  }
+
+  renderSessions();
+</script>
+
+</body>
+</html>

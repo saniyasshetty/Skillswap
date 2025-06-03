@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Learning Sessions</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #333;
+    }
+    .session-list {
+      margin-top: 20px;
+    }
+    .session {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }
+    input, button {
+      padding: 8px;
+      margin: 5px;
+      border-radius: 5px;
+    }
+    button {
+      cursor: pointer;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>📚 Learning Sessions</h1>
+
+  <input type="text" id="sessionTopic" placeholder="Enter topic (e.g., JavaScript)" />
+  <input type="datetime-local" id="sessionTime" />
+  <button onclick="addSession()">Add Session</button>
+
+  <div class="session-list" id="sessionList"></div>
+
+  <script>
+    const sessionList = document.getElementById('sessionList');
+
+    function loadSessions() {
+      const sessions = JSON.parse(localStorage.getItem('learningSessions')) || [];
+      sessionList.innerHTML = '';
+      sessions.forEach((s, i) => {
+        sessionList.innerHTML += `
+          <div class="session">
+            <strong>${s.topic}</strong> <br/>
+            📅 ${new Date(s.time).toLocaleString()}
+            <br/><button onclick="deleteSession(${i})">Delete</button>
+          </div>`;
+      });
+    }
+
+    function addSession() {
+      const topic = document.getElementById('sessionTopic').value;
+      const time = document.getElementById('sessionTime').value;
+      if (topic && time) {
+        const sessions = JSON.parse(localStorage.getItem('learningSessions')) || [];
+        sessions.push({ topic, time });
+        localStorage.setItem('learningSessions', JSON.stringify(sessions));
+        loadSessions();
+        document.getElementById('sessionTopic').value = '';
+        document.getElementById('sessionTime').value = '';
+      }
+    }
+
+    function deleteSession(index) {
+      const sessions = JSON.parse(localStorage.getItem('learningSessions')) || [];
+      sessions.splice(index, 1);
+      localStorage.setItem('learningSessions', JSON.stringify(sessions));
+      loadSessions();
+    }
+
+    loadSessions();
+  </script>
+</body>
+</html>

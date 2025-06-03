@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Skill Marketplace - SkillSwap</title>
+  <style>
+    body { font-family: Arial; max-width: 700px; margin: 30px auto; background: #f4f7fa; padding: 0 20px; }
+    nav a { margin-right: 15px; color: #1a73e8; text-decoration: none; font-weight: 600; }
+    h1 { color: #1a73e8; }
+    input, button { padding: 8px; border-radius: 5px; border: 1px solid #ccc; margin-top: 10px; }
+    button { background: #1a73e8; color: white; font-weight: bold; border: none; cursor: pointer; }
+    button:hover { background: #155ab6; }
+    .skill-card { background: white; padding: 10px 15px; border-radius: 5px; margin-top: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+ .back-home:hover {
+      background-color: #3949ab;
+    }
+ </style>
+</head>
+<body>
+
+  
+
+  <h1>Skill Discovery</h1>
+
+  <input type="text" id="skillSearch" placeholder="Search for a skill..." onkeyup="searchSkills()" />
+  <div id="skillResults"></div>
+
+<script>
+  const availableSkills = [
+    "Python", "Graphic Design", "Video Editing", "Public Speaking",
+    "Web Development", "Photography", "SEO", "Excel", "3D Modeling", "Cooking"
+  ];
+
+  function searchSkills() {
+    const query = document.getElementById("skillSearch").value.toLowerCase();
+    const results = document.getElementById("skillResults");
+    results.innerHTML = "";
+    availableSkills
+      .filter(skill => skill.toLowerCase().includes(query))
+      .forEach(skill => {
+        const div = document.createElement("div");
+        div.className = "skill-card";
+        div.textContent = skill;
+        results.appendChild(div);
+      });
+  }
+
+  searchSkills(); // Load all by default
+</script>
+
+</body>
+</html>

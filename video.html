@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SkillSwap Video Call</title>
+  <style>
+    video {
+      width: 45%;
+      margin: 10px;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    #container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2 style="text-align:center;">SkillSwap Video Conferencing</h2>
+
+  <div id="container">
+    <video id="localVideo" autoplay muted></video>
+    <video id="remoteVideo" autoplay></video>
+  </div>
+
+  <button onclick="startCall()">Start Call</button>
+
+  <script src="script.js"></script>
+</body>
+</html>

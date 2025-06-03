@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learning Streak - SkillSwap</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f0e6f6, #d9c7f1);
+      color: #2e0b55;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 4rem;
+      margin-bottom: 0.2em;
+      font-weight: 800;
+      text-shadow: 2px 2px 8px rgba(100, 50, 150, 0.5);
+    }
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 2em;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .streak-number {
+      font-size: 10rem;
+      font-weight: 900;
+      color: #6a1b9a;
+      text-shadow: 4px 4px 10px rgba(106, 27, 154, 0.6);
+      margin-bottom: 1em;
+    }
+    .back-home {
+      display: inline-block;
+      padding: 15px 35px;
+      background-color: #6a1b9a;
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 50px;
+      box-shadow: 0 10px 20px rgba(106, 27, 154, 0.4);
+      transition: background-color 0.3s ease;
+      font-size: 1.2rem;
+    }
+    .back-home:hover {
+      background-color: #7b3fbf;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Learning Streak</h1>
+  <div class="streak-number" id="streakCount">0</div>
+  <p>Days in a row of learning — keep it going!</p>
+
+  <a class="back-home" href="index.html">← Back to Home</a>
+
+  <script>
+    // Helper: get date string like '2025-06-02'
+    function getDateStr(date) {
+      return date.toISOString().split('T')[0];
+    }
+
+    // Load streak data from localStorage
+    let streakCount = parseInt(localStorage.getItem('streakCount')) || 0;
+    let lastDate = localStorage.getItem('lastDate'); // e.g. '2025-06-01'
+
+    const todayStr = getDateStr(new Date());
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const yesterdayStr = getDateStr(yesterday);
+
+    if (lastDate === todayStr) {
+      // Already counted today, do nothing
+    } else if (lastDate === yesterdayStr) {
+      // Consecutive day, increment streak
+      streakCount++;
+      localStorage.setItem('streakCount', streakCount);
+      localStorage.setItem('lastDate', todayStr);
+    } else {
+      // Missed a day or first visit, reset streak
+      streakCount = 1;
+      localStorage.setItem('streakCount', streakCount);
+      localStorage.setItem('lastDate', todayStr);
+    }
+
+    document.getElementById('streakCount').textContent = streakCount;
+  </script>
+
+</body>
+</html>
